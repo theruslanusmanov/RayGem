@@ -42,6 +42,19 @@ struct SearchView: View {
     animation: .default
   )
   private var gems: FetchedResults<Gem>
+  
+  @State var text = ""
+  
+  var results: [Gem] {
+    gems.filter {
+      $0.name.lowercased()
+        .contains(text.lowercased())
+    }
+  }
+  
+  var showEmptyMessage: Bool {
+    !text.isEmpty && results.isEmpty
+  }
 
   var body: some View {
     Text("To Do")
