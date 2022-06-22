@@ -44,9 +44,7 @@ struct AllGemsView: View {
   private var gems: FetchedResults<Gem>
 
   var body: some View {
-    GemList(gems) {
-      EmptyView()
-    }
+    GemList(gems)
     .navigationTitle("Gems")
   }
 }

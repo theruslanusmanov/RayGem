@@ -55,6 +55,14 @@ struct GemList<Content>: View where Content: View {
   }
 }
 
+extension GemList where Content == EmptyView {
+  init(_ gems: FetchedResults<Gem>) {
+    self.init(gems) {
+      EmptyView()
+    }
+  }
+}
+
 //struct GemList_Previews: PreviewProvider {
 //    static var previews: some View {
 //        GemList()
