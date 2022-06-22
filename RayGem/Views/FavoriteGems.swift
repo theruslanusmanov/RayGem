@@ -45,14 +45,9 @@ struct FavoriteGems: View {
   private var gems: FetchedResults<Gem>
 
   var body: some View {
-    List {
+    GemList(gems) {
       if gems.isEmpty {
         EmptyFavoriteMessage()
-      }
-      ForEach(gems) { gem in
-        NavigationLink(destination: DetailsView(gem: gem)) {
-          GemRow(gem: gem)
-        }
       }
     }
     .navigationTitle("Favorites")
