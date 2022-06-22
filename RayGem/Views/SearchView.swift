@@ -55,9 +55,22 @@ struct SearchView: View {
   var showEmptyMessage: Bool {
     !text.isEmpty && results.isEmpty
   }
-
+  
   var body: some View {
-    Text("To Do")
+    GemList(results) {
+      if showEmptyMessage {
+        Text("No gem found with the name \"\(text)\"")
+          .padding()
+          .foregroundColor(.secondary)
+          .listRowBackground(Color.clear)
+      }
+    }
+    .searchable(
+      text: $text,
+      placement: .navigationBarDrawer(displayMode: .always),
+      prompt: "Search by name"
+    )
+    .navigationTitle("Search")
   }
 }
 
@@ -68,7 +81,7 @@ struct SearchView_Previews: PreviewProvider {
     }
     .environment(
       \.managedObjectContext,
-      PersistenceController.preview.container.viewContext
+       PersistenceController.preview.container.viewContext
     )
   }
 }
