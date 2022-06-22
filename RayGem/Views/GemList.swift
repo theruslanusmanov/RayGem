@@ -32,11 +32,14 @@
 
 import SwiftUI
 
-struct GemList<Content>: View where Content: View {
-  let gems: FetchedResults<Gem>
+struct GemList<Content, Data>: View
+where Content: View,
+      Data: RandomAccessCollection,
+      Data.Element: Gem {
+  let gems: Data
   let messageView: Content
   
-  init(_ gems: FetchedResults<Gem>, @ViewBuilder messageView: () -> Content) {
+  init(_ gems: Data, @ViewBuilder messageView: () -> Content) {
     self.gems = gems
     self.messageView = messageView()
   }
@@ -56,15 +59,25 @@ struct GemList<Content>: View where Content: View {
 }
 
 extension GemList where Content == EmptyView {
-  init(_ gems: FetchedResults<Gem>) {
+  init(_ gems: Data) {
     self.init(gems) {
       EmptyView()
     }
   }
 }
 
-//struct GemList_Previews: PreviewProvider {
-//    static var previews: some View {
-//        GemList()
-//    }
-//}
+struct GemList_Previews: PreviewProvider {
+  static let gems = [roseGem, lapisGem]
+  
+  static var previews: some View {
+    NavigationView {
+      GemList(gems) {
+        Text("This is at the bottom of the list...")
+          .padding()
+          .listRowBackground(Color.clear)
+          .frame(maxWidth: .infinity)
+      }
+    }
+    .navigationTitle("Gems")
+  }
+}
