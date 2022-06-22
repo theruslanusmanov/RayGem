@@ -44,12 +44,8 @@ struct AllGemsView: View {
   private var gems: FetchedResults<Gem>
 
   var body: some View {
-    List {
-      ForEach(gems) { gem in
-        NavigationLink(destination: DetailsView(gem: gem)) {
-          GemRow(gem: gem)
-        }
-      }
+    GemList(gems) {
+      EmptyView()
     }
     .navigationTitle("Gems")
   }
